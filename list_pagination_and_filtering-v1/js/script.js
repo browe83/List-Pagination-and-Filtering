@@ -16,14 +16,15 @@ FSJS project 2 - List Filter and Pagination
    will only be used inside of a function, then it can be locally 
    scoped to that function.
 ***/
+const studentList = document.querySelectorAll('li');
+const perPage = 10;  
 
 
-
+console.log(studentList);
 
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
-
    Pro Tips: 
      - Keep in mind that with a list of 54 students, the last page 
        will only display four.
@@ -34,6 +35,17 @@ FSJS project 2 - List Filter and Pagination
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
+const showPage = (list, page) => {
+   const startIndex = (page * perPage) - perPage;
+   const endIndex = (page * perPage) - 1;
+   for (let i = 0; i < list.length; i++) {
+      if (i >= startIndex && i <= endIndex) {
+         list[i].style.display = '';
+      } else {
+         list[i].style.display = 'none';
+      }
+   }
+}
 
 
 

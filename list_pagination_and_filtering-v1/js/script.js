@@ -47,15 +47,34 @@ const showPage = (list, page) => {
    }
 }
 
-
-
-
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
+const appendPageLinks = (list, pp) => {
+   const paginationContainer = document.createElement('div');
+   const page = document.getElementsByClassName('page')
+   const paginationList = document.createElement('ul');
+   const numPages = Math.ceil(list.length/pp)
+   // paginationContainer.className="pagination";
+   page.appendChild(paginationContainer);
+   paginationContainer.appendChild(paginationList);
+   for (let i = 0; i < numPages ; i++) {
+      const li = document.createElement('li');
+      // li.textContent= ;
+      const a = document.createElement('a');
+      a.addEventListener('click', (event) => {
+         showPage(list, i)
+         for (let i = 0; i < numPages; i++) {
+            numPages[i].classList.remove('active');
+         }
+         const eventTarget = event.target;
+         eventTarget.classList.add('active');
+      })
+   }
 
-
+}
+appendPageLinks (studentList, perPage);
 
 
 

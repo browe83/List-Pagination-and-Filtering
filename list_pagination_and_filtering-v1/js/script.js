@@ -68,15 +68,16 @@ const appendPageLinks = (list) => {
       a.href= '#';
       a.textContent= i;
       a.addEventListener('click', (event) => {
-         showPage(list, i )
-         for (let i = 0; i < numPages; i++) {
-            // unknown target value.classList.remove('active');
-         }
+         showPage(list, i)
+         a.classList='active';
+         document.querySelector('a.active').classList.remove('active');
          const eventTarget = event.target;
          eventTarget.classList.add('active');
-      })
+         }
+      )
    }
 }
+ 
 showPage(studentList, 1); 
 appendPageLinks(studentList);
 

@@ -68,9 +68,8 @@ const appendPageLinks = (list) => {
       a.href= '#';
       a.textContent= i;
       a.addEventListener('click', (event) => {
-         showPage(list, i)
-         a.classList='active';
-         document.querySelector('a.active').classList.remove('active');
+         showPage(list, i);
+         document.querySelector(`.active`).classList.remove('active');
          const eventTarget = event.target;
          eventTarget.classList.add('active');
          }
@@ -80,6 +79,7 @@ const appendPageLinks = (list) => {
  
 showPage(studentList, 1); 
 appendPageLinks(studentList);
+document.querySelector('a').classList='active';
 
 
 

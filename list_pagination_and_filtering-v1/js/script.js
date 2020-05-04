@@ -17,12 +17,7 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 const studentList = document.querySelectorAll('li');
-
 const perPage = 10;  
-
-
-console.log(studentList);
-
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
@@ -76,7 +71,37 @@ const appendPageLinks = (list) => {
       )
    }
 }
- 
+
+const searchList = (list) => {
+   const searchBar = document.createElement('div');
+   searchBar.classList.add('student-search');
+   const pageHeader = document.querySelector('.page-header');
+   pageHeader.appendChild(searchBar);
+   const searchInput = document.createElement('input');
+   searchBar.appendChild(searchInput);
+   searchInput.placeholder="Search for students...";
+   const searchButton = document.createElement('button');
+   searchButton.textContent='Search';
+   searchBar.appendChild(searchButton);
+    
+   searchButton.addEventListener('click', (e) => {
+      const nameSearched = searchInput.value;
+      console.log(nameSearched);
+      for (let i = 0; i < list.length; i++){
+         console.log(list[i])
+         if (nameSearched.length !== 0 && list[i].textContext.toLowerCase().includes(nameSearched.toLowerCase())) {
+            list[i].style.display = '';
+         } else {
+            list[i].style.display = 'none';
+            page.innerHTML= `<p> No results</p>`;
+         }
+      }
+      // searchInput.value = '';
+   })
+}
+
+
+searchList(studentList);
 showPage(studentList, 1); 
 appendPageLinks(studentList);
 document.querySelector('a').classList='active';

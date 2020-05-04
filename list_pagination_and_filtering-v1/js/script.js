@@ -87,14 +87,17 @@ const searchList = (list) => {
    searchButton.addEventListener('click', (e) => {
       const nameSearched = searchInput.value;
       console.log(nameSearched);
-      for (let i = 0; i < list.length; i++){
-         console.log(list[i])
-         if (nameSearched.length !== 0 && list[i].textContext.toLowerCase().includes(nameSearched.toLowerCase())) {
-            list[i].style.display = '';
+      const studentNames = document.querySelectorAll('h3');
+      for (let i = 0; i < studentNames.length; i++){
+         console.log(studentNames[i])
+         if (nameSearched.length !== 0 && studentNames[i].textContent.toLowerCase().includes(nameSearched.toLowerCase())) {
+          newStudentList.push(studentNames[i]);
          } else {
-            list[i].style.display = 'none';
             page.innerHTML= `<p> No results</p>`;
          }
+      }
+      if  (newStudentList.length !== 0) {
+         appendPageLinks (newStudentList);
       }
       // searchInput.value = '';
    })

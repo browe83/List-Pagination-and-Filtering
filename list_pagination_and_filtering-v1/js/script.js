@@ -92,15 +92,14 @@ const searchList = (list) => {
       for (let i = 0; i < studentNames.length; i++){
          // console.log(studentNames[i])
          if (nameSearched.length !== 0 && studentNames[i].textContent.toLowerCase().includes(nameSearched.toLowerCase())) {
-            newStudentList.push(studentNames[i]);
+            newStudentList.push(studentNames[i].textContent);
          } else {
             page.innerHTML= `<p> No results</p>`;
          }
       }
-      if  (newStudentList.length !== 0) {
+      if (newStudentList.length !== 0) {
          appendPageLinks (newStudentList);
       }
-      // searchInput.value = '';
    })
 }
 

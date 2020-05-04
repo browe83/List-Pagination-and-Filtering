@@ -15,10 +15,11 @@ FSJS project 2 - List Filter and Pagination
    going to create. A good general rule of thumb is if the variable 
    will only be used inside of a function, then it can be locally 
    scoped to that function.
-***/
-const studentList = document.querySelectorAll('li');
-const perPage = 10;  
-/*** 
+   ***/
+  const studentList = document.querySelectorAll('li');
+  const perPage = 10;  
+  const page = document.querySelector('div')
+  /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
    Pro Tips: 
@@ -51,7 +52,6 @@ const appendPageLinks = (list) => {
    const numPages = Math.ceil(list.length/perPage)
    const paginationContainer = document.createElement('div');
    paginationContainer.className="pagination";
-   const page = document.querySelector('div')
    page.appendChild(paginationContainer);
    const paginationList = document.createElement('ul');
    paginationContainer.appendChild(paginationList);
@@ -87,11 +87,12 @@ const searchList = (list) => {
    searchButton.addEventListener('click', (e) => {
       const nameSearched = searchInput.value;
       console.log(nameSearched);
+      const newStudentList = []; 
       const studentNames = document.querySelectorAll('h3');
       for (let i = 0; i < studentNames.length; i++){
-         console.log(studentNames[i])
+         // console.log(studentNames[i])
          if (nameSearched.length !== 0 && studentNames[i].textContent.toLowerCase().includes(nameSearched.toLowerCase())) {
-          newStudentList.push(studentNames[i]);
+            newStudentList.push(studentNames[i]);
          } else {
             page.innerHTML= `<p> No results</p>`;
          }

@@ -11,9 +11,10 @@ const page = document.querySelector("div");
 const paginationContainer = document.createElement("div");
 paginationContainer.className = "pagination";
 page.appendChild(paginationContainer);
-
+const noResultsContainer = document.createElement("div");
+page.appendChild(noResultsContainer);
 /*** 
-  Displays a desginated page of students with provided information.
+  Displays a desginated page of students with email and photo.
 ***/
 const showPage = (list, page) => {
   const startIndex = page * perPage - perPage;
@@ -28,7 +29,7 @@ const showPage = (list, page) => {
 };
 
 /*** 
-   Creates corresponding pages links to allow the user to switch between pages of student information.
+   Creates corresponding pages links to allow the user to switch between pages of student lists.
 ***/
 const appendPageLinks = (list) => {
   const numPages = Math.ceil(list.length / perPage);
@@ -50,93 +51,59 @@ const appendPageLinks = (list) => {
     });
   }
 };
-
 /*** 
- Creates seachbar in which users can search for specific students by name.
+   Displays search results when user search with string value. 
 ***/
-const searchStudents = () => {
-  const searchBar = document.createElement("div");
-  searchBar.classList.add("student-search");
+function search(searchInput) {
+  const nameSearched = searchInput.value;
+  console.log(nameSearched);
+  const studentNames = document.querySelectorAll("h3");
+  const matchStudentList = [];
+  paginationContainer.innerHTML = "";
+  for (let i = 0; i < studentList.length; i++) {
+    studentList[i].style.display = "none";
+  }
+  for (let i = 0; i < studentNames.length; i++) {
+    if (
+      studentNames[i].textContent
+        .toLowerCase()
+        .includes(nameSearched.toLowerCase())
+    ) {
+      const studentInfoList = studentNames[i].parentNode.parentNode;
+      matchStudentList.push(studentInfoList);
+    }
+  }
+  if (matchStudentList.length > 0) {
+    showPage(matchStudentList, 1);
+    appendPageLinks(matchStudentList);
+    document.querySelector("a").classList = "active";
+    noResultsContainer.innerHTML = ``;
+    paginationContainer.style.display = ``;
+  } else {
+    noResultsContainer.innerHTML = "<p>No results.</p>";
+    paginationContainer.style.display = "none";
+  }
+}
+/*** 
+ Creates seachbar in which the user can search for specific students by name.
+***/
+const searchBar = () => {
+  const searchBarContainer = document.createElement("div");
+  searchBarContainer.classList.add("student-search");
   const pageHeader = document.querySelector(".page-header");
-  pageHeader.appendChild(searchBar);
+  pageHeader.appendChild(searchBarContainer);
   const searchInput = document.createElement("input");
-  searchBar.appendChild(searchInput);
+  searchBarContainer.appendChild(searchInput);
   searchInput.placeholder = "Search for students...";
   const searchButton = document.createElement("button");
   searchButton.textContent = "Search";
-  searchBar.appendChild(searchButton);
+  searchBarContainer.appendChild(searchButton);
 
-  searchButton.addEventListener("click", () => {
-    const nameSearched = searchInput.value;
-    console.log(nameSearched);
-    const studentListContainer = document.querySelector(".student-list");
-    const studentNames = document.querySelectorAll("h3");
-    const matchStudentList = [];
-    paginationContainer.innerHTML = "";
-    for (let i = 0; i < studentList.length; i++) {
-      studentList[i].style.display = "none";
-    }
-    for (let i = 0; i < studentNames.length; i++) {
-      if (
-        nameSearched.length !== 0 &&
-        studentNames[i].textContent
-          .toLowerCase()
-          .includes(nameSearched.toLowerCase())
-      ) {
-        const studentInfoList = studentNames[i].parentNode.parentNode;
-        matchStudentList.push(studentInfoList);
-      }
-    }
-    if (matchStudentList.length > 0) {
-      showPage(matchStudentList, 1);
-      appendPageLinks(matchStudentList);
-      document.querySelector("a").classList = "active";
-      console.log(matchStudentList);
-    } else {
-      studentListContainer.innerHTML =
-        "<p>No results. Please refresh page and try another search.</p>";
-      paginationContainer.style.display = "none";
-      searchBar.remove();
-    }
-  });
+  searchButton.addEventListener("click", () => search(searchInput));
 
-  searchInput.addEventListener("keyup", () => {
-    const nameSearched = searchInput.value;
-    console.log(nameSearched);
-    const studentListContainer = document.querySelector(".student-list");
-    const studentNames = document.querySelectorAll("h3");
-    const matchStudentList = [];
-    paginationContainer.innerHTML = "";
-    for (let i = 0; i < studentList.length; i++) {
-      studentList[i].style.display = "none";
-    }
-    for (let i = 0; i < studentNames.length; i++) {
-      if (
-        nameSearched.length !== 0 &&
-        studentNames[i].textContent
-          .toLowerCase()
-          .includes(nameSearched.toLowerCase())
-      ) {
-        const studentInfoList = studentNames[i].parentNode.parentNode;
-        matchStudentList.push(studentInfoList);
-      }
-    }
-    if (matchStudentList.length > 0) {
-      showPage(matchStudentList, 1);
-      appendPageLinks(matchStudentList);
-      document.querySelector("a").classList = "active";
-      console.log(matchStudentList);
-    } else {
-      studentListContainer.innerHTML =
-        "<p>No results. Please refresh page and try another search.</p>";
-      paginationContainer.style.display = "none";
-      searchBar.remove();
-    }
-  });
+  searchInput.addEventListener("keyup", () => search(searchInput));
 };
 showPage(studentList, 1);
 appendPageLinks(studentList);
-searchStudents();
+searchBar();
 document.querySelector("a").classList = "active";
-
-

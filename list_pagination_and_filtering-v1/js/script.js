@@ -73,7 +73,7 @@ const appendPageLinks = (list) => {
    }
 }
 
-const searchList = (list) => {
+const searchList = () => {
    const searchBar = document.createElement('div');
    searchBar.classList.add('student-search');
    const pageHeader = document.querySelector('.page-header');
@@ -90,7 +90,6 @@ const searchList = (list) => {
       const nameSearched = searchInput.value;
       console.log(nameSearched); 
       const studentNames = document.querySelectorAll('h3');
-      //const studentListContainer = document.querySelector('.student-list');
       const matchStudentList = [];
       paginationContainer.innerHTML='';
 
@@ -110,7 +109,7 @@ const searchList = (list) => {
 }
 showPage(studentList, 1); 
 appendPageLinks(studentList);
-searchList(studentList);
+searchList();
 document.querySelector('a').classList='active';
 
 

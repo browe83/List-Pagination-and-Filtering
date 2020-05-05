@@ -52,9 +52,10 @@ const appendPageLinks = (list) => {
    const numPages = Math.ceil(list.length/perPage)
    const paginationContainer = document.createElement('div');
    paginationContainer.className="pagination";
-   page.appendChild(paginationContainer);
    const paginationList = document.createElement('ul');
    paginationContainer.appendChild(paginationList);
+   page.appendChild(paginationContainer);
+
    for (let i = 1; i <= numPages; i++) {
       const li = document.createElement('li');
       const a = document.createElement('a');
@@ -84,30 +85,36 @@ const searchList = (list) => {
    searchButton.textContent='Search';
    searchBar.appendChild(searchButton);
     
+   
    searchButton.addEventListener('click', (e) => {
       const nameSearched = searchInput.value;
-      console.log(nameSearched);
-      const newStudentList = []; 
+      console.log(nameSearched); 
       const studentNames = document.querySelectorAll('h3');
+      //const studentListContainer = document.querySelector('.student-list');
+      const matchStudentList = [];
+      const paginationContainer = document.querySelector('.pagination');
+      paginationContainer.innerHTML='';
+
       for (let i = 0; i < studentNames.length; i++){
-         // console.log(studentNames[i])
          if (nameSearched.length !== 0 && studentNames[i].textContent.toLowerCase().includes(nameSearched.toLowerCase())) {
-            newStudentList.push(studentNames[i].textContent);
-         } else {
-            page.innerHTML= `<p> No results</p>`;
-         }
+            const studentInfoList = studentNames[i].parentNode.parentNode;
+            matchStudentList.push(studentInfoList);
+          } 
+      
       }
-      if (newStudentList.length !== 0) {
-         appendPageLinks (newStudentList);
+      if (matchStudentList.length > 0) {
+         showPage(matchStudentList, 1);
+         appendPageLinks(matchStudentList);
+         document.querySelector('a').classList='active';
       }
    })
 }
-
-
-searchList(studentList);
 showPage(studentList, 1); 
 appendPageLinks(studentList);
+searchList(studentList);
 document.querySelector('a').classList='active';
+
+
 
 
 
